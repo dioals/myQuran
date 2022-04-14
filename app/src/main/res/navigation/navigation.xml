@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/dashboardFragment">
+
+    <fragment
+        android:id="@+id/ayatFragment"
+        android:name="com.dioals.myquran.feature.ayat.AyatActivity"
+        android:label="Quran"
+        tools:layout="@layout/fragment_ayat" />
+    <fragment
+        android:id="@+id/juzFragment"
+        android:name="com.dioals.myquran.feature.juz.JuzFragment"
+        android:label="Juz Selection"
+        tools:layout="@layout/fragment_juz">
+        <action
+            android:id="@+id/action_juzFragment_to_ayatFragment"
+            app:destination="@id/ayatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/surahFragment"
+        android:name="com.dioals.myquran.feature.surah.SurahFragment"
+        android:label="Surah Selection"
+        tools:layout="@layout/fragment_surah">
+        <action
+            android:id="@+id/action_surahFragment_to_ayatFragment"
+            app:destination="@id/ayatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.dioals.myquran.feature.dashboard.DashboardFragment"
+        android:label="MyQuran"
+        tools:layout="@layout/fragment_dashboard">
+        <action
+            android:id="@+id/action_dashboardFragment_to_juzFragment"
+            app:destination="@id/juzFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_surahFragment"
+            app:destination="@id/surahFragment" />
+    </fragment>
+</navigation>
