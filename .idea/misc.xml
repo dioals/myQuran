@@ -4,7 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Work/Android/MyQuran/app/src/main/res/drawable/ic_ayat.xml" value="0.253" />
+        <entry key="..\:/Work/Android/MyQuran/app/src/main/res/drawable/ic_baseline_menu_book_24.xml" value="0.11" />
         <entry key="..\:/Work/Android/MyQuran/app/src/main/res/drawable/ic_connection_error.xml" value="0.11" />
+        <entry key="..\:/Work/Android/MyQuran/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.11" />
         <entry key="..\:/Work/Android/MyQuran/app/src/main/res/drawable/ic_sun.xml" value="0.179" />
         <entry key="..\:/Work/Android/MyQuran/app/src/main/res/drawable/loading_anim.xml" value="0.11" />
         <entry key="..\:/Work/Android/MyQuran/app/src/main/res/drawable/loading_img.xml" value="0.11" />
@@ -16,6 +18,8 @@
         <entry key="..\:/Work/Android/MyQuran/app/src/main/res/layout/item_ayat.xml" value="0.4" />
         <entry key="..\:/Work/Android/MyQuran/app/src/main/res/layout/item_juz.xml" value="0.2210144927536232" />
         <entry key="..\:/Work/Android/MyQuran/app/src/main/res/layout/item_surah.xml" value="0.2210144927536232" />
+        <entry key="..\:/Work/Android/MyQuran/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.11" />
+        <entry key="..\:/Work/Android/MyQuran/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1145" />
       </map>
     </option>
   </component>
