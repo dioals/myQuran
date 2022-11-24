@@ -23,7 +23,7 @@ class SurahFragment : Fragment() {
         // Inflate the layout for this fragment
         val binding = FragmentSurahBinding.inflate(inflater,container,false)
         binding.rvData.adapter = SurahAdapter(requireContext())
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = viewModel
         return binding.root
     }

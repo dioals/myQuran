@@ -1,10 +1,7 @@
 package com.dioals.myquran.feature.ayat
 
-import android.util.Log
 import androidx.lifecycle.*
-import com.dioals.myquran.model.Ayat
-import com.dioals.myquran.model.Juz
-import com.dioals.myquran.model.Surah
+import com.dioals.myquran.model.Pagination
 import com.dioals.myquran.model.VersesItem
 import com.dioals.myquran.network.ApiStatus
 import com.dioals.myquran.network.QuranApi
@@ -17,7 +14,7 @@ import kotlinx.coroutines.launch
  * Created by Dio Als on 11/04/2022
  */
 
-class AyatViewModel(val act: AyatActivity,isSurah: Boolean, number:Int) : ViewModel() {
+class AyatViewModel(isSurah: Boolean, number:Int) : ViewModel() {
 
     private var _surahName =MutableLiveData<String>()
     val surahName : LiveData<String> = _surahName
@@ -32,22 +29,25 @@ class AyatViewModel(val act: AyatActivity,isSurah: Boolean, number:Int) : ViewMo
         getAyatList(isSurah, number)
     }
 
-    fun getAyatList(isSurah:Boolean, number: Int) {
+    private fun getAyatList(isSurah:Boolean, number: Int, page:Int=1) {
         _status.value = ApiStatus.LOADING
         viewModelScope.launch {
             try {
-                val response = if(isSurah) QuranApi.retrofitService.getSurah(number) else QuranApi.retrofitService.getJuz(number)
-                val json = Gson().toJson(response.data)
-                if(isSurah){
-                    val adapter = moshi.adapter(Ayat::class.java)
-                    val data = adapter.fromJson(json)
-                    _ayat.value = data?.verses!!
-                }else{
-                    val adapter = moshi.adapter(Juz::class.java)
-                    val data = adapter.fromJson(json)
-                    _ayat.value = data?.verses!!
-                }
+                val response = QuranApi.retrofitService.getSurah(number,page)
+                val json = Gson().toJson(response.verses)
+                val listMyData = Types.newParameterizedType(List::class.java, VersesItem::class.java)
+                val jsonAdapter = moshi.adapter<List<VersesItem>>(listMyData)
+                val data = jsonAdapter.fromJson(json)
+                val existingData = ArrayList<VersesItem>()
+                _ayat.value?.let { existingData.addAll(it) }
+                data?.let { existingData.addAll(it) }
+                _ayat.value = existingData
                 _status.value = ApiStatus.DONE
+
+                val infoResponse = Gson().toJson(response.pagination)
+                val info = Gson().fromJson(infoResponse,Pagination::class.java)
+                if(info.next_page != null)
+                    getAyatList(true,number,info.next_page)
             }catch (e:Exception){
                 e.printStackTrace()
                 _ayat.value = listOf()
@@ -57,9 +57,8 @@ class AyatViewModel(val act: AyatActivity,isSurah: Boolean, number:Int) : ViewMo
     }
 }
 
-class AyatModelFactory constructor(val act:AyatActivity,val isSurah: Boolean, val number: Int):ViewModelProvider.Factory{
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return AyatViewModel(act,isSurah, number) as T
+class AyatModelFactory constructor(private val isSurah: Boolean, private val number: Int):ViewModelProvider.Factory{
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return AyatViewModel(isSurah, number) as T
     }
-
 }

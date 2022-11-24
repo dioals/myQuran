@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.dioals.myquran.R
 import com.dioals.myquran.databinding.FragmentDashboardBinding
@@ -29,8 +30,9 @@ class DashboardFragment : Fragment() {
         val binding = FragmentDashboardBinding.inflate(inflater,container,false)
 
         with(binding){
-            btnJuz.setOnClickListener { findNavController().navigate(R.id.action_dashboardFragment_to_juzFragment) }
+//            btnJuz.setOnClickListener { findNavController().navigate(R.id.action_dashboardFragment_to_juzFragment) }
             btnSurah.setOnClickListener { findNavController().navigate(R.id.action_dashboardFragment_to_surahFragment) }
+            btnShalat.setOnClickListener { Toast.makeText(requireContext(),"Coming soon",Toast.LENGTH_SHORT).show() }
         }
 
         return binding.root

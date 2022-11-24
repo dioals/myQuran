@@ -19,7 +19,7 @@ class JuzFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentJuzBinding.inflate(inflater,container,false)
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = viewModel
         binding.rvData.adapter = JuzAdapter(requireContext())
         return binding.root

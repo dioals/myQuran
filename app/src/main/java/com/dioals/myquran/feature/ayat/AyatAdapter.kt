@@ -24,17 +24,18 @@ class AyatAdapter(): ListAdapter<VersesItem, AyatAdapter.ViewHolder>(DiffCallbac
             oldItem==newItem
 
         override fun areContentsTheSame(oldItem: VersesItem, newItem: VersesItem): Boolean =
-            oldItem.number==newItem.number
+            oldItem.id==newItem.id
     }
 
     class ViewHolder(val binding:ItemAyatBinding, val mContext: Context):RecyclerView.ViewHolder(binding.root) {
         fun bind(ayat:VersesItem, isEven:Boolean){
             with(binding){
                 bg.setBackgroundColor(ContextCompat.getColor(mContext, if(isEven) R.color.color_even else R.color.color_odd))
-                tvNumber.text = ayat.number?.inSurah.toString()
-                surahInfo.visibility = if(ayat.number?.inSurah==1)View.VISIBLE else View.GONE
-                tvAyat.text = ayat.text?.arab
-                tvRead.text = ayat.translation?.id
+                tvNumber.text = ayat.verse_number.toString()
+                surahInfo.visibility = if(ayat.id==1)View.VISIBLE else View.GONE
+                tvAyat.text = ayat.text_madani
+                tvRead.visibility = View.GONE
+//                tvRead.text = ayat.translation?.id
             }
         }
     }

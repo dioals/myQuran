@@ -9,22 +9,22 @@
     android:background="@drawable/appbg">
 
     <Button
-        android:id="@+id/btnJuz"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Juz"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
         android:id="@+id/btnSurah"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Surah"
+        android:text="@string/surah"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnJuz" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <Button
+        android:id="@+id/btnShalat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/jadwal_shalat"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnSurah" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,6 @@ data class Juz(
 	@Json(name="juz")
 	val juz: Int? = null,
 
-	@Json(name="verses")
+	@Json(name="ayahs")
 	val verses: List<VersesItem>? = null
 )

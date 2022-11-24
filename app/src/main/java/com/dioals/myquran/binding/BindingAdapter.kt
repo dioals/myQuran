@@ -51,5 +51,8 @@ fun bindStatus(statusImageView: ImageView,
         ApiStatus.DONE -> {
             statusImageView.visibility = View.GONE
         }
+        else ->{
+            statusImageView.visibility = View.GONE
+        }
     }
 }

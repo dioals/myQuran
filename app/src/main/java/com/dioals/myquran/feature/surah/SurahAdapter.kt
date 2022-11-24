@@ -26,15 +26,15 @@ class SurahAdapter(val mContext: Context):ListAdapter<Surah,SurahAdapter.ViewHol
     class ViewHolder(val binding:ItemSurahBinding, val mContext: Context):RecyclerView.ViewHolder(binding.root) {
         fun bind(surah:Surah, isEven:Boolean){
             with(binding){
-                tvNumber.text = surah.number.toString()
-                tvTitle.text = surah.name?.transliteration?.id
-                tvAyat.text = surah.name?.jsonMemberShort
+                tvNumber.text = surah.id.toString()
+                tvTitle.text = surah.name_simple
+                tvAyat.text = surah.name_arabic
                 bg.setBackgroundColor(ContextCompat.getColor(mContext, if(isEven) R.color.color_even else R.color.color_odd))
                 bg.setOnClickListener {
                     val intent = Intent(mContext, AyatActivity::class.java)
                     intent.putExtra(EXTRA_SURAH,true)
-                    intent.putExtra(EXTRA_NUMBER,surah.number)
-                    intent.putExtra(SURAH_NAME,surah.name?.transliteration?.id)
+                    intent.putExtra(EXTRA_NUMBER,surah.id)
+                    intent.putExtra(SURAH_NAME,surah.name_simple)
                     mContext.startActivity(intent)
                 }
             }
@@ -46,7 +46,7 @@ class SurahAdapter(val mContext: Context):ListAdapter<Surah,SurahAdapter.ViewHol
             oldItem==newItem
 
         override fun areContentsTheSame(oldItem: Surah, newItem: Surah): Boolean =
-            oldItem.number==newItem.number
+            oldItem.id==newItem.id
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder=

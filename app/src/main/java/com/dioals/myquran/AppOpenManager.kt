@@ -8,7 +8,7 @@ import androidx.lifecycle.Lifecycle.Event.ON_START
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
-import com.dioals.myquran.model.ADMOB_TEST_OPENAPP
+import com.dioals.myquran.model.ADMOB_OPEN_APP
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -22,9 +22,9 @@ import java.util.*
  * Created by Dio Als on 25/05/2022
  */
 
-class AppOpenManager(val myApplication: QuranApplication): LifecycleObserver,Application.ActivityLifecycleCallbacks {
+class AppOpenManager(private val myApplication: QuranApplication): LifecycleObserver,Application.ActivityLifecycleCallbacks {
     private val LOG_TAG = "AppOpenManager"
-    private val AD_UNIT_ID = ADMOB_TEST_OPENAPP
+    private val AD_UNIT_ID = ADMOB_OPEN_APP
     private var appOpenAd: AppOpenAd? = null
 
     private var currentActivity:Activity?=null
@@ -52,7 +52,7 @@ class AppOpenManager(val myApplication: QuranApplication): LifecycleObserver,App
              */
             override fun onAdLoaded(ad: AppOpenAd) {
                 appOpenAd = ad
-                loadTime = Date().getTime()
+                loadTime = Date().time
             }
 
             /**
@@ -67,7 +67,7 @@ class AppOpenManager(val myApplication: QuranApplication): LifecycleObserver,App
         val request = getAdRequest()
         AppOpenAd.load(
             myApplication, AD_UNIT_ID, request,
-            AppOpenAd.APP_OPEN_AD_ORIENTATION_PORTRAIT, loadCallback
+            AppOpenAd.APP_OPEN_AD_ORIENTATION_PORTRAIT, loadCallback!!
         )
     }
 
@@ -79,18 +79,18 @@ class AppOpenManager(val myApplication: QuranApplication): LifecycleObserver,App
     }
 
     /** Utility method that checks if ad exists and can be shown.  */
-    fun isAdAvailable(): Boolean {
+    private fun isAdAvailable(): Boolean {
         return appOpenAd != null && wasLoadTimeLessThanNHoursAgo(4)
     }
 
     /** LifecycleObserver methods  */
     @OnLifecycleEvent(ON_START)
-    fun onStart() {
+    fun onMoveToForeground() {
         showAdIfAvailable()
         Log.d(LOG_TAG, "onStart")
     }
 
-    fun showAdIfAvailable() {
+    private fun showAdIfAvailable() {
         // Only show ad if there is not already an app open ad currently showing
         // and an ad is available.
         if (!isShowingAd && isAdAvailable()) {
@@ -110,7 +110,7 @@ class AppOpenManager(val myApplication: QuranApplication): LifecycleObserver,App
                     }
                 }
             appOpenAd!!.setFullScreenContentCallback(fullScreenContentCallback)
-            appOpenAd!!.show(currentActivity)
+            currentActivity?.let { appOpenAd!!.show(it) }
         } else {
             Log.d(LOG_TAG, "Can not show ad.")
             fetchAd()
@@ -118,7 +118,7 @@ class AppOpenManager(val myApplication: QuranApplication): LifecycleObserver,App
     }
 
     /** Creates and returns ad request.  */
-    private fun getAdRequest(): AdRequest? {
+    private fun getAdRequest(): AdRequest {
         return AdRequest.Builder().build()
     }
 
