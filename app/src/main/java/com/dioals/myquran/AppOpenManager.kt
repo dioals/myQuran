@@ -86,7 +86,7 @@ class AppOpenManager(private val myApplication: QuranApplication): LifecycleObse
     /** LifecycleObserver methods  */
     @OnLifecycleEvent(ON_START)
     fun onMoveToForeground() {
-        showAdIfAvailable()
+//        showAdIfAvailable()
         Log.d(LOG_TAG, "onStart")
     }
 
